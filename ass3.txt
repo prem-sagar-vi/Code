@@ -1,0 +1,356 @@
+SQL> select count(Order_no) from sales_order;
+
+COUNT(ORDER_NO)                                                                 
+---------------                                                                 
+              6                                                                 
+
+SQL> select count(Order_no) count from sales_order;
+
+     COUNT                                                                      
+----------                                                                      
+         6                                                                      
+
+SQL> select avg(sell_price) avg from product_master;
+
+       AVG                                                                      
+----------                                                                      
+3663.88889                                                                      
+
+SQL> select count(product_no) from product_master where sell_price>=1500;
+
+COUNT(PRODUCT_NO)                                                               
+-----------------                                                               
+                4                                                               
+
+SQL> select count(*) from product_master where sell_price>=1500;
+
+  COUNT(*)                                                                      
+----------                                                                      
+         4                                                                      
+
+SQL> select max(sell_price) max_price,min(sell_price) min_price from product_master;
+
+ MAX_PRICE  MIN_PRICE                                                           
+---------- ----------                                                           
+     12000        525                                                           
+
+SQL> update client_master set city='Madras' where client_no='C005';
+
+1 row updated.
+
+SQL> select city from client_master;
+
+CITY                                                                            
+---------------                                                                 
+Bombay                                                                          
+Madras                                                                          
+KOlkata                                                                         
+Bombay                                                                          
+Madras                                                                          
+Bombay                                                                          
+
+6 rows selected.
+
+SQL> update client_master set Balance_due=3000 where client_no='C005';
+
+1 row updated.
+
+SQL> select balance_due from client_master;
+
+BALANCE_DUE                                                                     
+-----------                                                                     
+      15000                                                                     
+          0                                                                     
+       5000                                                                     
+          0                                                                     
+       3000                                                                     
+          0                                                                     
+
+6 rows selected.
+
+SQL> delete from client_master where state='TamilNadu';
+delete from client_master where state='TamilNadu'
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (HR.SYS_C004273) violated - child record found 
+
+
+SQL> alter table client_master add(Telephone number(10));
+alter table client_master add(Telephone number(10))
+                              *
+ERROR at line 1:
+ORA-01430: column being added already exists in table 
+
+
+SQL> desc client_master;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CLIENT_NO                                 NOT NULL VARCHAR2(6)
+ NAME                                      NOT NULL VARCHAR2(30)
+ ADDRESS1                                           VARCHAR2(30)
+ CITY                                               VARCHAR2(15)
+ STATE                                              VARCHAR2(15)
+ PINCODE                                            NUMBER(14,2)
+ BALANCE_DUE                                        NUMBER(10,2)
+ TELEPHONE                                          NUMBER(10)
+
+SQL> alter table client_master modify(Pincode number(10));
+alter table client_master modify(Pincode number(10))
+                                 *
+ERROR at line 1:
+ORA-01440: column to be modified must be empty to decrease precision or scale 
+
+
+SQL> alter table client_master modify(Pincode number(20));
+alter table client_master modify(Pincode number(20))
+                                 *
+ERROR at line 1:
+ORA-01440: column to be modified must be empty to decrease precision or scale 
+
+
+SQL> delete Pincode from client_master;
+delete Pincode from client_master
+               *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> delete  from client_master where Pincode==-1;
+delete  from client_master where Pincode==-1
+                                         *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> delete  from client_master where Pincode=-1;
+
+0 rows deleted.
+
+SQL> alter table client_master drop(Address2);
+alter table client_master drop(Address2)
+                               *
+ERROR at line 1:
+ORA-00904: "ADDRESS2": invalid identifier 
+
+
+SQL> alter table client_master drop(Address1);
+
+Table altered.
+
+SQL> desc client_master;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CLIENT_NO                                 NOT NULL VARCHAR2(6)
+ NAME                                      NOT NULL VARCHAR2(30)
+ CITY                                               VARCHAR2(15)
+ STATE                                              VARCHAR2(15)
+ PINCODE                                            NUMBER(14,2)
+ BALANCE_DUE                                        NUMBER(10,2)
+ TELEPHONE                                          NUMBER(10)
+
+SQL> create table client_master_duplicate as(select * from client_master where 1=2);
+
+Table created.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID                               
+------------------------------ ------- ----------                               
+SALES_MASTER                   TABLE                                            
+BIN$MaFdg6uUTDyKCfrWh4eOcA==$0 TABLE                                            
+REGIONS                        TABLE                                            
+COUNTRIES                      TABLE                                            
+LOCATIONS                      TABLE                                            
+DEPARTMENTS                    TABLE                                            
+JOBS                           TABLE                                            
+EMPLOYEES                      TABLE                                            
+JOB_HISTORY                    TABLE                                            
+EMP_DETAILS_VIEW               VIEW                                             
+BIN$Fr9eW6M4Tm+I0odXbDMh7Q==$0 TABLE                                            
+
+TNAME                          TABTYPE  CLUSTERID                               
+------------------------------ ------- ----------                               
+STUDENT                        TABLE                                            
+BIN$zYOFm+/MSMmmOoxaa+GJzA==$0 TABLE                                            
+BIN$IJIEvZYTSb2K6vyimHegyQ==$0 TABLE                                            
+BIN$ERKZdeOYS4yVvJu1E5N3tQ==$0 TABLE                                            
+BIN$pNfj9N2rRuej2MllSfYN8A==$0 TABLE                                            
+BIN$DsAZ/npXReaRWDtoMHz6Og==$0 TABLE                                            
+BIN$IL5vfQ43TBiszpy+cVcFSA==$0 TABLE                                            
+BIN$RqVrlRs5RFejsXC4dYVQew==$0 TABLE                                            
+BIN$MYEZsy96TVu2dmOC5WKwUQ==$0 TABLE                                            
+BIN$Jw5zwSxQQ7CwjjYTeTf8AQ==$0 TABLE                                            
+BIN$ipVfzsLURvatyYCiXuverA==$0 TABLE                                            
+
+TNAME                          TABTYPE  CLUSTERID                               
+------------------------------ ------- ----------                               
+BIN$uDyU6GXMTPKP+kZx/gJvkQ==$0 TABLE                                            
+BIN$7gMyEGZwTjmvIFJEWUJF2g==$0 TABLE                                            
+BIN$L0XRoLl8RyKIq5RsTpc6lA==$0 TABLE                                            
+BIN$ur+6tIj9SFSiBDdVbbYy5g==$0 TABLE                                            
+BIN$b4T4QdZrTfeVEAUflugefA==$0 TABLE                                            
+BIN$rqz77Lk6QSWJuxd+Dq1ozA==$0 TABLE                                            
+BIN$hJVVYSOVT2CiTxp8Bi38BA==$0 TABLE                                            
+BIN$pHFj+YzdRnanMQQEZFvaMQ==$0 TABLE                                            
+BIN$x5RzshQ2Td6fxRK6k9mFxA==$0 TABLE                                            
+BIN$AaNAvcqNQt2tqQSDLcc6Ug==$0 TABLE                                            
+BIN$xOePdE5CS8SZOUc36iy/1g==$0 TABLE                                            
+
+TNAME                          TABTYPE  CLUSTERID                               
+------------------------------ ------- ----------                               
+BIN$H1se9jvkTyGtsDj91m8lfQ==$0 TABLE                                            
+BIN$FG8+6yJARNSnJB7Gpmz15A==$0 TABLE                                            
+BIN$WIEfLskbShS6+Xy+DIe5RA==$0 TABLE                                            
+BIN$xmTCjG0KRhCpHK95Iap2Ng==$0 TABLE                                            
+BIN$sXjtyLVxSgWH5FcIMQIdMg==$0 TABLE                                            
+BIN$Z8ULWW0rQFCH+butWBHjJQ==$0 TABLE                                            
+BIN$wehrijADST29hx0/qW8lVw==$0 TABLE                                            
+BIN$BM3TcwIaSOK4ZxScY6JwBw==$0 TABLE                                            
+BIN$aig+EM9uQI201cAQf+K8iA==$0 TABLE                                            
+BIN$WgfEXsdZQKak+/9fTQ7PCg==$0 TABLE                                            
+PRODUCT_MASTER                 TABLE                                            
+
+TNAME                          TABTYPE  CLUSTERID                               
+------------------------------ ------- ----------                               
+BIN$bVryNkDyRZOurIjKk0ahAw==$0 TABLE                                            
+BIN$vfnKSVWKS6qnJ10d6ftjCg==$0 TABLE                                            
+BIN$+StIJV/9StWXP8ZZE12P7A==$0 TABLE                                            
+CLIENT_MASTER                  TABLE                                            
+SALESMAN_MASTER                TABLE                                            
+SALES_ORDER                    TABLE                                            
+SALES_ORDER_DETAILS            TABLE                                            
+BIN$OoFp5o/qST+8uykemYADFA==$0 TABLE                                            
+BIN$UDRDhL4bSX6W/HG4tD4HiA==$0 TABLE                                            
+CLIENT_MASTER_DUPLICATE        TABLE                                            
+
+54 rows selected.
+
+SQL> insert into client_master_duplicate select * from client_master;
+
+6 rows created.
+
+SQL> desc client_master_duplicate;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CLIENT_NO                                          VARCHAR2(6)
+ NAME                                      NOT NULL VARCHAR2(30)
+ CITY                                               VARCHAR2(15)
+ STATE                                              VARCHAR2(15)
+ PINCODE                                            NUMBER(14,2)
+ BALANCE_DUE                                        NUMBER(10,2)
+ TELEPHONE                                          NUMBER(10)
+
+SQL> select * from client_master_duplicate;
+
+CLIENT NAME                           CITY            STATE              PINCODE
+------ ------------------------------ --------------- --------------- ----------
+BALANCE_DUE  TELEPHONE                                                          
+----------- ----------                                                          
+C001   Ivan Bayross                   Bombay          Maharastra          400054
+      15000                                                                     
+                                                                                
+C002   VandanaSatiwal                 Madras          TamilNadu           780001
+          0                                                                     
+                                                                                
+C003   PramadaJaguste                 KOlkata         West Bengal         700058
+       5000                                                                     
+                                                                                
+
+CLIENT NAME                           CITY            STATE              PINCODE
+------ ------------------------------ --------------- --------------- ----------
+BALANCE_DUE  TELEPHONE                                                          
+----------- ----------                                                          
+C004   BasuNavindgi                   Bombay          Maharastra          400056
+          0                                                                     
+                                                                                
+C005   Ravi Sreedharan                Madras          Delhi               100001
+       3000                                                                     
+                                                                                
+C006   Rukmini                        Bombay          Maharastra          400050
+          0                                                                     
+                                                                                
+
+6 rows selected.
+
+SQL> alter table client_master_duplicate rename to c_master;
+
+Table altered.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID                               
+------------------------------ ------- ----------                               
+SALES_MASTER                   TABLE                                            
+BIN$MaFdg6uUTDyKCfrWh4eOcA==$0 TABLE                                            
+REGIONS                        TABLE                                            
+COUNTRIES                      TABLE                                            
+LOCATIONS                      TABLE                                            
+DEPARTMENTS                    TABLE                                            
+JOBS                           TABLE                                            
+EMPLOYEES                      TABLE                                            
+JOB_HISTORY                    TABLE                                            
+EMP_DETAILS_VIEW               VIEW                                             
+BIN$Fr9eW6M4Tm+I0odXbDMh7Q==$0 TABLE                                            
+
+TNAME                          TABTYPE  CLUSTERID                               
+------------------------------ ------- ----------                               
+STUDENT                        TABLE                                            
+BIN$zYOFm+/MSMmmOoxaa+GJzA==$0 TABLE                                            
+BIN$IJIEvZYTSb2K6vyimHegyQ==$0 TABLE                                            
+BIN$ERKZdeOYS4yVvJu1E5N3tQ==$0 TABLE                                            
+BIN$pNfj9N2rRuej2MllSfYN8A==$0 TABLE                                            
+BIN$DsAZ/npXReaRWDtoMHz6Og==$0 TABLE                                            
+BIN$IL5vfQ43TBiszpy+cVcFSA==$0 TABLE                                            
+BIN$RqVrlRs5RFejsXC4dYVQew==$0 TABLE                                            
+BIN$MYEZsy96TVu2dmOC5WKwUQ==$0 TABLE                                            
+BIN$Jw5zwSxQQ7CwjjYTeTf8AQ==$0 TABLE                                            
+BIN$ipVfzsLURvatyYCiXuverA==$0 TABLE                                            
+
+TNAME                          TABTYPE  CLUSTERID                               
+------------------------------ ------- ----------                               
+BIN$uDyU6GXMTPKP+kZx/gJvkQ==$0 TABLE                                            
+BIN$7gMyEGZwTjmvIFJEWUJF2g==$0 TABLE                                            
+BIN$L0XRoLl8RyKIq5RsTpc6lA==$0 TABLE                                            
+BIN$ur+6tIj9SFSiBDdVbbYy5g==$0 TABLE                                            
+BIN$b4T4QdZrTfeVEAUflugefA==$0 TABLE                                            
+BIN$rqz77Lk6QSWJuxd+Dq1ozA==$0 TABLE                                            
+BIN$hJVVYSOVT2CiTxp8Bi38BA==$0 TABLE                                            
+BIN$pHFj+YzdRnanMQQEZFvaMQ==$0 TABLE                                            
+BIN$x5RzshQ2Td6fxRK6k9mFxA==$0 TABLE                                            
+BIN$AaNAvcqNQt2tqQSDLcc6Ug==$0 TABLE                                            
+BIN$xOePdE5CS8SZOUc36iy/1g==$0 TABLE                                            
+
+TNAME                          TABTYPE  CLUSTERID                               
+------------------------------ ------- ----------                               
+BIN$H1se9jvkTyGtsDj91m8lfQ==$0 TABLE                                            
+BIN$FG8+6yJARNSnJB7Gpmz15A==$0 TABLE                                            
+BIN$WIEfLskbShS6+Xy+DIe5RA==$0 TABLE                                            
+BIN$xmTCjG0KRhCpHK95Iap2Ng==$0 TABLE                                            
+BIN$sXjtyLVxSgWH5FcIMQIdMg==$0 TABLE                                            
+BIN$Z8ULWW0rQFCH+butWBHjJQ==$0 TABLE                                            
+BIN$wehrijADST29hx0/qW8lVw==$0 TABLE                                            
+BIN$BM3TcwIaSOK4ZxScY6JwBw==$0 TABLE                                            
+BIN$aig+EM9uQI201cAQf+K8iA==$0 TABLE                                            
+BIN$WgfEXsdZQKak+/9fTQ7PCg==$0 TABLE                                            
+PRODUCT_MASTER                 TABLE                                            
+
+TNAME                          TABTYPE  CLUSTERID                               
+------------------------------ ------- ----------                               
+BIN$bVryNkDyRZOurIjKk0ahAw==$0 TABLE                                            
+BIN$vfnKSVWKS6qnJ10d6ftjCg==$0 TABLE                                            
+BIN$+StIJV/9StWXP8ZZE12P7A==$0 TABLE                                            
+CLIENT_MASTER                  TABLE                                            
+SALESMAN_MASTER                TABLE                                            
+SALES_ORDER                    TABLE                                            
+SALES_ORDER_DETAILS            TABLE                                            
+BIN$OoFp5o/qST+8uykemYADFA==$0 TABLE                                            
+BIN$UDRDhL4bSX6W/HG4tD4HiA==$0 TABLE                                            
+C_MASTER                       TABLE                                            
+
+54 rows selected.
+
+SQL> drop table c_master;
+
+Table dropped.
+
+SQL> spool off;
